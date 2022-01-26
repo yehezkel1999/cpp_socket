@@ -4,6 +4,9 @@ obj/
 *.o
 *.obj
 
+*.so
+*.a
+
 # executalbles
 *.exe
 server
