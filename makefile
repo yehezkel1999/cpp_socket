@@ -13,6 +13,7 @@
 CC=g++
 # compiler flags: 
 CFLAGS=-g -Wall
+OPFLAGS=-O2 -DNDEBUG
 # linker flags:
 LDFLAGS=
 # remove command (predefined as rm -f):
@@ -49,7 +50,7 @@ all: $(OUT)
 
 
 # create static library with optimazation flags
-staticr: CFLAGS=-O2 -DNDEBUG
+staticr: CFLAGS=$(OPFLAGS)
 staticr: clean
 staticr: $(STATIC)
 
@@ -62,7 +63,7 @@ $(STATIC): $(ALL_OBJS) $(OBJ)
 
 # release build: cleans the build and rebuilds it with optimazation flags 
 # rather than debug flags (command: make release)
-release: CFLAGS=-O2 -DNDEBUG
+release: CFLAGS=$(OPFLAGS)
 release: clean
 release: $(OUT)
 
