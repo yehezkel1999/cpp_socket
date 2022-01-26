@@ -1,0 +1,9 @@
+
+# object files
+obj/
+*.o
+*.obj
+
+# executalbles
+*.exe
+server
