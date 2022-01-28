@@ -26,8 +26,8 @@ SRC=src
 # object files directory:
 OBJ=obj
 
-LIBCPP=$(SRC)/libsocket.cpp
-LIBH=$(SRC)/libsocket.h
+LIBCPP=$(SRC)/Socket.cpp
+LIBH=$(SRC)/Socket.h
 
 # all of the source files: 
 ALL_SRCS=$(wildcard $(SRC)/*.cpp)
