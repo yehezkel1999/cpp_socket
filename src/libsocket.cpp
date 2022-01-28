@@ -23,7 +23,7 @@ namespace sock {
         }
 
     bool Socket::createSocket(int type, int protocol) {
-        _sock = socket(_sockStruct.sin_family, SOCK_STREAM, 0);
+        _sock = socket(_sockStruct.sin_family, type, protocol);
         return _sock != INVALID_SOCKET;
     }
 
