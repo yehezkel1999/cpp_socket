@@ -26,24 +26,24 @@ SRC=src
 # object files directory:
 OBJ=obj
 
-LIBCPP=$(SRC)/Socket.cpp
-LIBH=$(SRC)/Socket.h
+LIBCPP=$(SRC)/libsocket.cpp
+LIBH=$(SRC)/libsocket.h
 
 # all of the source files: 
 ALL_SRCS=$(wildcard $(SRC)/*.cpp)
 # all of the object files:
 ALL_OBJS=$(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(ALL_SRCS))
-# all of the source files, apart from socket.cpp: 
+# all of the source files, apart from linsocket.cpp: 
 SRCS=$(filter-out $(LIBCPP), $(wildcard $(SRC)/*.cpp))
-# all of the object files, apart from socket.o:
+# all of the object files, apart from libsocket.o:
 OBJS=$(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(SRCS))
 
 # output name:
-OUT=Socket.so
+OUT=libsocket.so
 # static output name:
-STATIC=Socket.a
+STATIC=libsocket.a
 # zipped file name in case the code needs to be submitted as a zipped file
-SUBMIT=Socket.zip
+SUBMIT=libsocket.zip
 
 # the target to be executed when the makefile is executed (command: make)
 all: $(OUT)
@@ -92,3 +92,8 @@ clean:
 zip:
 	$(RM) $(SUBMIT)
 	$(ZIP) $(SUBMIT) $(OUT) $(SRC)
+
+
+# install the library:
+all release:
+	ld --verbose | grep SEARCH_DIR | tr -s ' ;' \\012
