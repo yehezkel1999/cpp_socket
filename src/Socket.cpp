@@ -1,6 +1,6 @@
 
 #include <cassert>
-#include <iostream>
+#include <ostream>
 #include "Socket.h"
 
 namespace sock {
