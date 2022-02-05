@@ -8,7 +8,7 @@ namespace sock {
     const int Socket::minBuff = 32;
 
     Socket::Socket(int type, ADDRESS_FAMILY family, int protocol)
-        : _sock(0), _isValid(createSocket(type, protocol)), _sockStruct(sockaddr_in()) {
+        : _sock(0), _isValid(createSocket(type, protocol, family)), _sockStruct(sockaddr_in()) {
         _sockStruct.sin_family = family;
     }
     Socket::Socket(SOCKET socket, sockaddr_in &sockStruct)
@@ -22,8 +22,8 @@ namespace sock {
             other._sockStruct = sockaddr_in();
         }
 
-    bool Socket::createSocket(int type, int protocol) {
-        _sock = socket(_sockStruct.sin_family, type, protocol);
+    bool Socket::createSocket(int type, int protocol, ADDRESS_FAMILY family) {
+        _sock = socket(family, type, protocol);
         return _sock != INVALID_SOCKET;
     }
 

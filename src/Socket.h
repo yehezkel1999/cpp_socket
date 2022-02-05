@@ -76,7 +76,7 @@ namespace sock {
     private:
         Socket(SOCKET socket, sockaddr_in &sockStruct);
         void validateSocket() const { if (!_isValid) throw invalid_socket(); }
-        bool createSocket(int type, int protocol);
+        bool createSocket(int type, int protocol, ADDRESS_FAMILY family);
 
     public:
         static const int minBuff;
