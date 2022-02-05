@@ -97,4 +97,5 @@ zip:
 # install the library:
 all release:
 	ld --verbose | grep --quiet SEARCH_DIR | tr -s ' ;' \\012
+	sudo chmod +x install_lib.sh
 	./install_lib.sh $(OUT)
