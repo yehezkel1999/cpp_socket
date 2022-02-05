@@ -84,7 +84,7 @@ namespace sock {
         Socket(int type = SOCK_STREAM, ADDRESS_FAMILY family = AF_INET, int protocol = 0);
         Socket(const Socket &other);
         Socket(Socket &&other);
-        virtual ~Socket() { sclose(); }
+        virtual ~Socket() {}
 
         bool isValid() { return _isValid; }
         SOCKET getSocket() { return _sock; }
