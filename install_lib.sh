@@ -6,6 +6,8 @@
 
 lib=$1
 
+sudo rm -f /usr/lib/$lib  # delete old library
+
 sudo cp $lib /usr/lib
 sudo chmod 0755 /usr/lib/$lib
 
