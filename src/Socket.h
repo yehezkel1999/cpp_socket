@@ -5,6 +5,13 @@
 
 #include <exception>
 #include <stdexcept>
+#include <cassert>
+
+#ifndef NDEBUG
+#define DEBUG(x) x
+#else
+#define DEBUG(x)
+#endif
 
 
 #if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__) // if windows
@@ -55,18 +62,6 @@ namespace sock {
         socket_error(const socket_error &socket_error) : std::runtime_error(socket_error) {}
         ~socket_error() {}
     };
-    class invalid_socket : public socket_error {
-    public:
-        invalid_socket(const char *message = "invalid socket") : socket_error(message) {}
-        invalid_socket(const invalid_socket &invalid_socket) : socket_error(invalid_socket) {}
-        ~invalid_socket() {}
-    };
-    class socket_action_error : public socket_error {
-    public:
-        socket_action_error(const char *message = "socket action error") : socket_error(message) {}
-        socket_action_error(const socket_action_error &socket_action_error) : socket_error(socket_action_error) {}
-        ~socket_action_error() {}
-    };
 
 
     class Socket {
@@ -75,7 +70,7 @@ namespace sock {
 
     private:
         Socket(SOCKET socket, sockaddr_in &sockStruct);
-        void validateSocket() const { if (!_isValid) throw invalid_socket(); }
+        void validateSocket() const { DEBUG(assert(_isValid && "Socket is invalid, please make sure all the information is correct");) }
         bool createSocket(int type, int protocol, ADDRESS_FAMILY family);
 
     public:
