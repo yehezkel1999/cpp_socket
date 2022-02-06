@@ -1,5 +1,4 @@
 
-#include <cassert>
 #include <ostream>
 #include "Socket.h"
 
@@ -34,13 +33,14 @@ namespace sock {
         _sockStruct.sin_port = htons(port);
 
         if (bind(_sock, (struct sockaddr *)&_sockStruct, sizeof(_sockStruct)) == SOCKET_ERROR)
-            throw socket_action_error();
+            throw socket_error("Could not bind the socket on the given host and port, please make sure "
+                                        "the input is correct and the port is open and free");
     }
     void Socket::slisten(int backlog) {
         validateSocket();
 
         if (listen(_sock, backlog) == SOCKET_ERROR)
-            throw socket_action_error();
+            throw socket_error("Something went wrong when listening, please make sure the port is still open and free");
     }
     Socket Socket::saccept() {
         validateSocket();
@@ -50,7 +50,7 @@ namespace sock {
         SOCKET new_socket = accept(_sock, (struct sockaddr *)&client, &c);
 
         if (new_socket == INVALID_SOCKET)
-            throw socket_action_error();
+            throw socket_error("Could not accept the given client");
 
         return Socket(new_socket, client);
     }
@@ -62,16 +62,16 @@ namespace sock {
         _sockStruct.sin_port = htons(port);
 
         if (connect(_sock, (const struct sockaddr *)&_sockStruct, sizeof(_sockStruct)) < 0)
-            throw socket_action_error();
+            throw socket_error("Could not connect to the given host on the given port, please make sure the input is correct");
     }
     void Socket::ssend(const char *message, size_type size) const {
         validateSocket();
 
         if (send(_sock, message, size, 0) < 0)
-            throw socket_action_error();
+            throw socket_error("Sending info failed, please make sure the endpoint is still alive");
     }
     const char *Socket::srecv(int bufferSize) const {
-        assert(bufferSize > Socket::minBuff && "buffer cannot be less than Socket::minBuff");
+        DEBUG(assert(bufferSize > Socket::minBuff && "buffer cannot be less than Socket::minBuff");)
 
         char *data = new char[bufferSize];
         try { srecv(data, bufferSize); }
@@ -86,7 +86,7 @@ namespace sock {
         int recvSize = recv(_sock, buffer, size - 1, 0);
 
         if (recvSize == SOCKET_ERROR) 
-            throw socket_action_error();
+            throw socket_error("Receiving info failed, please make sure the endpoint is still alive");
         
         buffer[recvSize] = '\0';
         return recvSize;
